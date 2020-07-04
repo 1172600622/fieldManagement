@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.jxust.dao.TKeyProDao">
+
+    <resultMap type="cn.edu.jxust.entity.TKeyPro" id="TKeyProMap">
+        <result property="kId" column="k_id" jdbcType="VARCHAR"/>
+        <result property="kName" column="k_name" jdbcType="VARCHAR"/>
+        <result property="kDataRange" column="k_data_range" jdbcType="VARCHAR"/>
+        <result property="kData" column="k_data" jdbcType="TIMESTAMP"/>
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="webType" column="web_type" jdbcType="VARCHAR"/>
+        <result property="kSeason" column="k_season" jdbcType="VARCHAR"/>
+        <result property="mTime" column="m_time" jdbcType="OTHER"/>
+        <result property="sumTime" column="sum_time" jdbcType="INTEGER"/>
+        <result property="dataCount" column="data_count" jdbcType="INTEGER"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="kAddr" column="k_addr" jdbcType="VARCHAR"/>
+        <result property="kRelease" column="k_release" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TKeyProMap">
+        select
+          k_id, k_name, k_data_range, k_data, id, web_type, k_season, m_time, sum_time, data_count, remark, k_addr, k_release
+        from fieldmanagement.t_key_pro
+        where k_id = #{kId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TKeyProMap">
+        select
+          k_id, k_name, k_data_range, k_data, id, web_type, k_season, m_time, sum_time, data_count, remark, k_addr, k_release
+        from fieldmanagement.t_key_pro
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TKeyProMap">
+        select
+          k_id, k_name, k_data_range, k_data, id, web_type, k_season, m_time, sum_time, data_count, remark, k_addr, k_release
+        from fieldmanagement.t_key_pro
+        <where>
+            <if test="kId != null and kId != ''">
+                and k_id = #{kId}
+            </if>
+            <if test="kName != null and kName != ''">
+                and k_name = #{kName}
+            </if>
+            <if test="kDataRange != null and kDataRange != ''">
+                and k_data_range = #{kDataRange}
+            </if>
+            <if test="kData != null">
+                and k_data = #{kData}
+            </if>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="webType != null and webType != ''">
+                and web_type = #{webType}
+            </if>
+            <if test="kSeason != null and kSeason != ''">
+                and k_season = #{kSeason}
+            </if>
+            <if test="mTime != null">
+                and m_time = #{mTime}
+            </if>
+            <if test="sumTime != null">
+                and sum_time = #{sumTime}
+            </if>
+            <if test="dataCount != null">
+                and data_count = #{dataCount}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+            <if test="kAddr != null and kAddr != ''">
+                and k_addr = #{kAddr}
+            </if>
+            <if test="kRelease != null">
+                and k_release = #{kRelease}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="kId" useGeneratedKeys="true">
+        insert into fieldmanagement.t_key_pro(k_name, k_data_range, k_data, id, web_type, k_season, m_time, sum_time, data_count, remark, k_addr, k_release)
+        values (#{kName}, #{kDataRange}, #{kData}, #{id}, #{webType}, #{kSeason}, #{mTime}, #{sumTime}, #{dataCount}, #{remark}, #{kAddr}, #{kRelease})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update fieldmanagement.t_key_pro
+        <set>
+            <if test="kName != null and kName != ''">
+                k_name = #{kName},
+            </if>
+            <if test="kDataRange != null and kDataRange != ''">
+                k_data_range = #{kDataRange},
+            </if>
+            <if test="kData != null">
+                k_data = #{kData},
+            </if>
+            <if test="id != null and id != ''">
+                id = #{id},
+            </if>
+            <if test="webType != null and webType != ''">
+                web_type = #{webType},
+            </if>
+            <if test="kSeason != null and kSeason != ''">
+                k_season = #{kSeason},
+            </if>
+            <if test="mTime != null">
+                m_time = #{mTime},
+            </if>
+            <if test="sumTime != null">
+                sum_time = #{sumTime},
+            </if>
+            <if test="dataCount != null">
+                data_count = #{dataCount},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="kAddr != null and kAddr != ''">
+                k_addr = #{kAddr},
+            </if>
+            <if test="kRelease != null">
+                k_release = #{kRelease},
+            </if>
+        </set>
+        where k_id = #{kId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from fieldmanagement.t_key_pro where k_id = #{kId}
+    </delete>
+  <select id="allRecords" resultType="int" >
+       SELECT  count(*) FROM  t_key_pro;
+  </select>
+
+    <insert id="addOneRecod" parameterType="cn.edu.jxust.entity.TKeyPro">
+      INSERT INTO t_key_pro (k_id)VALUES (#{KId})
+    </insert>
+</mapper>

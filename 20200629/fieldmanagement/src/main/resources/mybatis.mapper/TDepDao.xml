@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.jxust.dao.TDepDao">
+
+    <resultMap type="cn.edu.jxust.entity.TDep" id="TDepMap">
+        <result property="depId" column="dep_id" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="BOOLEAN"/>
+        <result property="depTel" column="dep_tel" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TDepMap">
+        select
+          dep_id, name, status, dep_tel
+        from fieldmanagement.t_dep
+        where dep_id = #{depId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TDepMap">
+        select
+          dep_id, name, status, dep_tel
+        from fieldmanagement.t_dep
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TDepMap">
+        select
+          dep_id, name, status, dep_tel
+        from fieldmanagement.t_dep
+        <where>
+            <if test="depId != null and depId != ''">
+                and dep_id = #{depId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="depTel != null and depTel != ''">
+                and dep_tel = #{depTel}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" parameterType="cn.edu.jxust.entity.TDep">
+        insert into fieldmanagement.t_dep( dep_id, name, status, dep_tel)
+        values (#{depId},#{name}, #{status}, #{depTel})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update fieldmanagement.t_dep
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="depTel != null and depTel != ''">
+                dep_tel = #{depTel},
+            </if>
+        </set>
+        where dep_id = #{depId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from fieldmanagement.t_dep where dep_id = #{depId}
+    </delete>
+  <select id="listAll" resultMap="TDepMap">
+            select * from  t_dep;
+  </select>
+</mapper>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.jxust.dao.TDataoutDao">
+
+    <resultMap type="cn.edu.jxust.entity.TDataout" id="TDataoutMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="INTEGER"/>
+        <result property="fxId" column="fx_id" jdbcType="VARCHAR"/>
+        <result property="depId" column="dep_id" jdbcType="VARCHAR"/>
+        <result property="duty" column="duty" jdbcType="VARCHAR"/>
+        <result property="signInTime" column="sign_in_time" jdbcType="TIMESTAMP"/>
+        <result property="signInPlace" column="sign_in_place" jdbcType="VARCHAR"/>
+        <result property="context" column="context" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TDataoutMap">
+        select
+          id, user_name, fx_id, dep_id, duty, sign_in_time, sign_in_place, context
+        from fieldmanagement.t_dataout
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TDataoutMap">
+        select
+          id, user_name, fx_id, dep_id, duty, sign_in_time, sign_in_place, context
+        from fieldmanagement.t_dataout
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TDataoutMap">
+        select
+          id, user_name, fx_id, dep_id, duty, sign_in_time, sign_in_place, context
+        from fieldmanagement.t_dataout
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="userName != null">
+                and user_name = #{userName}
+            </if>
+            <if test="fxId != null and fxId != ''">
+                and fx_id = #{fxId}
+            </if>
+            <if test="depId != null and depId != ''">
+                and dep_id = #{depId}
+            </if>
+            <if test="duty != null and duty != ''">
+                and duty = #{duty}
+            </if>
+            <if test="signInTime != null">
+                and sign_in_time = #{signInTime}
+            </if>
+            <if test="signInPlace != null and signInPlace != ''">
+                and sign_in_place = #{signInPlace}
+            </if>
+            <if test="context != null and context != ''">
+                and context = #{context}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into fieldmanagement.t_dataout(user_name, fx_id, dep_id, duty, sign_in_time, sign_in_place, context)
+        values (#{userName}, #{fxId}, #{depId}, #{duty}, #{signInTime}, #{signInPlace}, #{context})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update fieldmanagement.t_dataout
+        <set>
+            <if test="userName != null">
+                user_name = #{userName},
+            </if>
+            <if test="fxId != null and fxId != ''">
+                fx_id = #{fxId},
+            </if>
+            <if test="depId != null and depId != ''">
+                dep_id = #{depId},
+            </if>
+            <if test="duty != null and duty != ''">
+                duty = #{duty},
+            </if>
+            <if test="signInTime != null">
+                sign_in_time = #{signInTime},
+            </if>
+            <if test="signInPlace != null and signInPlace != ''">
+                sign_in_place = #{signInPlace},
+            </if>
+            <if test="context != null and context != ''">
+                context = #{context},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from fieldmanagement.t_dataout where id = #{id}
+    </delete>
+
+</mapper>

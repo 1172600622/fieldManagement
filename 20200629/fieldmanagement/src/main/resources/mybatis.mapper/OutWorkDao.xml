@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.jxust.dao.OutWorkDao">
+
+
+    <insert id="insert" keyProperty="LJIP_id" useGeneratedKeys="true">
+        insert into fieldmanagement.ljip(LJIP_name, LJIP_time, LJIP_maker, LJIP_type, LJIP_season, LJIP_mtimes, LJIP_sub,LJIP_each,LJIP_memo,LJIP_address)
+        values (#{LJIP_name}, #{LJIP_time}, #{LJIP_maker}, #{LJIP_type}, #{LJIP_season}, #{LJIP_mtimes}, #{LJIP_sub}, #{LJIP_each}, #{LJIP_memo}, #{LJIP_address})
+    </insert>
+
+</mapper>
+    
+    
